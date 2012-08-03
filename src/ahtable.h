@@ -33,7 +33,7 @@ typedef unsigned char* slot_t;
 typedef struct ahtable_t_
 {
     /* these fields are reserved for hattrie to fiddle with */
-    uint8_t flag; 
+    uint8_t flag;
     unsigned char c0;
     unsigned char c1;
 

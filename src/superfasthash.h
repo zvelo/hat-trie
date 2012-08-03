@@ -35,7 +35,7 @@
 
 #include "pstdint.h"
 
-uint32_t hash(const char * data, int len);
-uint32_t hash_inc(const char * data, int len, uint32_t hash);
+uint32_t hat_trie_hash(const char * data, int len);
+uint32_t hat_trie_hash_inc(const char * data, int len, uint32_t hat_trie_hash);
 
 #endif

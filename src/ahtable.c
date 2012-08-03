@@ -125,7 +125,7 @@ static void ahtable_expand(ahtable_t* T)
     ahtable_iter_t* i = ahtable_iter_begin(T, false);
     while (!ahtable_iter_finished(i)) {
         key = ahtable_iter_key(i, &len);
-        slot_sizes[hash(key, len) % new_n] +=
+        slot_sizes[hat_trie_hash(key, len) % new_n] +=
             len + sizeof(value_t) + (len >= 128 ? 2 : 1);
 
         ++m;
@@ -159,7 +159,7 @@ static void ahtable_expand(ahtable_t* T)
     while (!ahtable_iter_finished(i)) {
 
         key = ahtable_iter_key(i, &len);
-        h = hash(key, len) % new_n;
+        h = hat_trie_hash(key, len) % new_n;
 
         slots_next[h] = ins_key(slots_next[h], key, len, &u);
         v = ahtable_iter_val(i);
@@ -194,7 +194,7 @@ static value_t* get_key(ahtable_t* T, const char* key, size_t len, bool insert_m
     }
 
 
-    uint32_t i = hash(key, len) % T->n;
+    uint32_t i = hat_trie_hash(key, len) % T->n;
     size_t k;
     slot_t s;
     value_t* val;
@@ -257,7 +257,7 @@ value_t* ahtable_tryget(ahtable_t* T, const char* key, size_t len )
 
 void ahtable_del(ahtable_t* T, const char* key, size_t len)
 {
-    uint32_t i = hash(key, len) % T->n;
+    uint32_t i = hat_trie_hash(key, len) % T->n;
     size_t k;
     slot_t s;
 
