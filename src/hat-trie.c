@@ -495,12 +495,15 @@ hattrie_iter_t* hattrie_iter_begin(const hattrie_t* T, bool sorted)
     i->has_nil_key = false;
     i->nil_val     = 0;
 
-    i->stack = malloc_or_die(sizeof(hattrie_node_stack_t));
-    i->stack->next   = NULL;
-    i->stack->node   = T->root;
-    i->stack->c      = '\0';
-    i->stack->level  = 0;
-
+    if (T == NULL) {
+      i->stack = NULL;
+    } else {
+      i->stack = malloc_or_die(sizeof(hattrie_node_stack_t));
+      i->stack->next   = NULL;
+      i->stack->node   = T->root;
+      i->stack->c      = '\0';
+      i->stack->level  = 0;
+    }
 
     while (((i->i == NULL || ahtable_iter_finished(i->i)) && !i->has_nil_key) &&
            i->stack != NULL ) {
