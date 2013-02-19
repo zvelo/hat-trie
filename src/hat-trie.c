@@ -60,7 +60,7 @@ struct hattrie_t_
  * can be NULL). */
 static trie_node_t* alloc_trie_node(hattrie_t* T, node_ptr child)
 {
-    trie_node_t* node = malloc_or_die(sizeof(trie_node_t));
+    trie_node_t* node = (trie_node_t*)malloc_or_die(sizeof(trie_node_t));
     node->flag = NODE_TYPE_TRIE;
     node->val  = 0;
     
@@ -141,7 +141,7 @@ static node_ptr hattrie_find(hattrie_t* T, const char **key, size_t *len)
 
 hattrie_t* hattrie_create()
 {
-    hattrie_t* T = malloc_or_die(sizeof(hattrie_t));
+    hattrie_t* T = (hattrie_t*)malloc_or_die(sizeof(hattrie_t));
     T->m = 0;
 
     node_ptr node;
@@ -467,7 +467,7 @@ static void hattrie_iter_pushchar(hattrie_iter_t* i, size_t level, char c)
 {
     if (i->keysize < level) {
         i->keysize *= 2;
-        i->key = realloc_or_die(i->key, i->keysize * sizeof(char));
+        i->key = (char*)realloc_or_die(i->key, i->keysize * sizeof(char));
     }
 
     if (level > 0) {
@@ -513,7 +513,7 @@ static void hattrie_iter_nextnode(hattrie_iter_t* i)
 
             // push stack
             next = i->stack;
-            i->stack = malloc_or_die(sizeof(hattrie_node_stack_t));
+            i->stack = (hattrie_node_stack_t*)malloc_or_die(sizeof(hattrie_node_stack_t));
             i->stack->node  = node.t->xs[j];
             i->stack->next  = next;
             i->stack->level = level + 1;
@@ -535,12 +535,12 @@ static void hattrie_iter_nextnode(hattrie_iter_t* i)
 
 hattrie_iter_t* hattrie_iter_begin(const hattrie_t* T, bool sorted)
 {
-    hattrie_iter_t* i = malloc_or_die(sizeof(hattrie_iter_t));
+    hattrie_iter_t* i = (hattrie_iter_t*)malloc_or_die(sizeof(hattrie_iter_t));
     i->T = T;
     i->sorted = sorted;
     i->i = NULL;
     i->keysize = 16;
-    i->key = malloc_or_die(i->keysize * sizeof(char));
+    i->key = (char*)malloc_or_die(i->keysize * sizeof(char));
     i->level   = 0;
     i->has_nil_key = false;
     i->nil_val     = 0;
@@ -548,7 +548,7 @@ hattrie_iter_t* hattrie_iter_begin(const hattrie_t* T, bool sorted)
     if (T == NULL) {
       i->stack = NULL;
     } else {
-      i->stack = malloc_or_die(sizeof(hattrie_node_stack_t));
+      i->stack = (hattrie_node_stack_t*)malloc_or_die(sizeof(hattrie_node_stack_t));
       i->stack->next   = NULL;
       i->stack->node   = T->root;
       i->stack->c      = '\0';
@@ -638,7 +638,7 @@ const char* hattrie_iter_key(hattrie_iter_t* i, size_t* len)
 
     if (i->keysize < i->level + sublen + 1) {
         while (i->keysize < i->level + sublen + 1) i->keysize *= 2;
-        i->key = realloc_or_die(i->key, i->keysize * sizeof(char));
+        i->key = (char*)realloc_or_die(i->key, i->keysize * sizeof(char));
     }
 
     memcpy(i->key + i->level, subkey, sublen);
