@@ -20,11 +20,12 @@
 
 #ifdef __cplusplus
 extern "C" {
+#else
+# include <stdbool.h>
 #endif
 
 #include "common.h"
 #include <stdlib.h>
-#include <stdbool.h>
 
 typedef struct hattrie_t_ hattrie_t;
 

@@ -21,10 +21,11 @@
 
 #ifdef __cplusplus
 extern "C" {
+#else
+# include <stdbool.h>
 #endif
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include "pstdint.h"
 #include "common.h"
 
