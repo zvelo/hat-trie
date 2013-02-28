@@ -2,6 +2,10 @@ IF(${MSVC})
   INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/msvc)
 ENDIF(${MSVC})
 
+SET(HEADERS
+  hat-trie.h
+  common.h)
+
 SET(SOURCES
   ahtable.c
   hat-trie.c
@@ -9,6 +13,7 @@ SET(SOURCES
   murmurhash3.c)
 
 ADD_LIBRARY(hat-trie ${SOURCES})
+SET_TARGET_PROPERTIES(hat-trie PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
 INSTALL(
   TARGETS hat-trie
