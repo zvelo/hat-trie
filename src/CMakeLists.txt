@@ -4,7 +4,8 @@ ENDIF(${MSVC})
 
 SET(HEADERS
   hat-trie.h
-  common.h)
+  common.h
+  pstdint.h)
 
 SET(SOURCES
   ahtable.c
